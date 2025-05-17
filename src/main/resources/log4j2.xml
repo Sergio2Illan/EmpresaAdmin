@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
+    <Properties>
+        <Property name="logPath">${sys:user.dir}/logs</Property>
+    </Properties>
+    
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
         </Console>
 
         <RollingFile name="InfoFile"
-                     fileName="logs/info.log"
-                     filePattern="logs/info-%d{yyyy-MM-dd}.log.gz">
+                     fileName="${logPath}/info-app.log"
+                     filePattern="${logPath}/info-%d{yyyy-MM-dd}.log.gz">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
             <Policies>
                 <TimeBasedTriggeringPolicy />
@@ -18,7 +22,7 @@
         </RollingFile>
 
         <RollingFile name="ErrorFile"
-                     fileName="logs/error.log"
+                     fileName="logs/error-app.log"
                      filePattern="logs/error-%d{yyyy-MM-dd}.log.gz">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
             <Policies>
