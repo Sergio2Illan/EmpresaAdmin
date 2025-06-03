@@ -28,8 +28,9 @@ public class EmpleadosDAOImpl implements EmpleadosDAO {
     }*/
 
     @Override
-    public void agregar(Empleado e) {
-        String sql = "INSERT INTO empleados (nombre, email, puesto, salario) VALUES (?, ?, ?, ?)";
+    public int agregar(Empleado e) {
+        String sql = "INSERT INTO empleado (nombre, correo, departamento, salario) VALUES (?, ?, ?, ?)";
+        int isOK = 0;
         try (Connection conn = Conexion.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -38,12 +39,13 @@ public class EmpleadosDAOImpl implements EmpleadosDAO {
             pstmt.setString(2, e.getEmail());
             pstmt.setString(3, e.getPuesto());
             pstmt.setDouble(4, e.getSalario());
-            pstmt.executeUpdate();
+            isOK = pstmt.executeUpdate();
 
         } catch (SQLException ex) {
             logger.error(">------>"+ex.getLocalizedMessage());
 
         }
+        return isOK;
     }
 
     @Override
@@ -58,8 +60,8 @@ public class EmpleadosDAOImpl implements EmpleadosDAO {
                 Empleado e = new Empleado();
                 e.setId(rs.getInt("id"));
                 e.setNombre(rs.getString("nombre"));
-                e.setEmail(rs.getString("email"));
-                e.setPuesto(rs.getString("puesto"));
+                e.setEmail(rs.getString("correo"));
+                e.setPuesto(rs.getString("departamento"));
                 e.setSalario(rs.getDouble("salario"));
                 empleados.add(e);
             }
@@ -82,8 +84,8 @@ public class EmpleadosDAOImpl implements EmpleadosDAO {
                     e = new Empleado();
                     e.setId(rs.getInt("id"));
                     e.setNombre(rs.getString("nombre"));
-                    e.setEmail(rs.getString("email"));
-                    e.setPuesto(rs.getString("puesto"));
+                    e.setEmail(rs.getString("correo"));
+                    e.setPuesto(rs.getString("departamento"));
                     e.setSalario(rs.getDouble("salario"));
                 }
             }
@@ -95,7 +97,7 @@ public class EmpleadosDAOImpl implements EmpleadosDAO {
 
     @Override
     public void actualizar(Empleado e) {
-        String sql = "UPDATE empleado SET nombre=?, apellido=?, especialidad=?, salario=? WHERE id=?";
+        String sql = "UPDATE empleado SET nombre=?, correo=?, departamento=?, salario=? WHERE id=?";
         try (Connection conn = Conexion.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -113,17 +115,19 @@ public class EmpleadosDAOImpl implements EmpleadosDAO {
     }
 
     @Override
-    public void eliminar(int id) {
+    public int eliminar(int id) {
+        int ok = 0;
         String sql = "DELETE FROM empleado WHERE id=?";
         try (Connection conn = Conexion.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             logger.info("Ejecutamos la siguiente Query: " + sql);
             stmt.setInt(1, id);
-            stmt.executeUpdate();
+            ok = stmt.executeUpdate();
 
         } catch (Exception ex) {
             logger.error(">------>"+ex.getLocalizedMessage());
         }
+        return ok;
     }
 }

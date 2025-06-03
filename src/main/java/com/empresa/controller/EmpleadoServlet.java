@@ -30,22 +30,59 @@ public class EmpleadoServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String action = request.getParameter("accion");
+        int ok = 0;
+        int id = 0;
         switch(action){
+
             case "alta":
+                String nombre = request.getParameter("nombre");
+                String email = request.getParameter("email");
+                String puesto = request.getParameter("puesto");
+                double salario = Double.parseDouble(request.getParameter("salario"));
+                ok = altaEmpleado(nombre, email, puesto, salario);
+                response.sendRedirect("empleado.jsp?success="+ok);
+                break;
+            case "baja":
+                id= Integer.parseInt(request.getParameter("id"));
+                ok = DAOFactory.getEmpleado().eliminar(id);
+                setVariables(id, ok);
+                response.sendRedirect("empleado.jsp?success="+ok);
+                break;
+            case "modificar":
+
                 break;
             case "buscarPorId":
-                // request.setAttribute("empleado", encontrado);
+                id = Integer.parseInt(request.getParameter("id"));
+                Empleado emple = DAOFactory.getEmpleado().obtenerPorId(id);
+                setVariables(id, ok);
+                request.setAttribute("empleado", emple);
+                response.sendRedirect("empleado.jsp");
                 break;
             case "buscarTodos":
-                // request.setAttribute("listaEmpleados", lista);
+                List<Empleado> lista = DAOFactory.getEmpleado().listar();
+                logger.info("Número de empleados listados: "+lista.stream().count());
+                request.setAttribute("listaEmpleados", lista);
+                response.sendRedirect("empleado.jsp");
                 break;
             default:
                 response.sendRedirect("empleado.jsp?error=1");
                 break;
         }
 
-        request.getRequestDispatcher("empleado.jsp").forward(request, response);
+    }
 
+    private static void setVariables(int id, int ok) {
+        id = 0;
+        ok = 0;
+    }
 
+    private int altaEmpleado(String nombre, String email, String puesto, double salario) {
+        Empleado emple = new Empleado();
+        emple.setEmail(email);
+        emple.setNombre(nombre);
+        emple.setPuesto(puesto);
+        emple.setSalario(salario);
+        EmpleadosDAO empleDao = DAOFactory.getEmpleado();
+        return empleDao.agregar(emple);
     }
 }
