@@ -11,38 +11,24 @@
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-  <div class="main-container ">
-    <div class="main-container-opacity"></div>
-    <div class="container">
-      <div class="login-image">
-        <div class="img-opacity">
-        </div>
-        <img src="img/fot.jpg" alt="Foto de la empresa más guay del mundo.">
-      </div>
-      <div class="login-container">
-          <form id="loginForm" class="login-form" method="post" action="${pageContext.request.contextPath}/LoginServlet">
-              <h2>Iniciar Sesión</h2>
-              <div class="input-group">
-                  <label for="username">Usuario</label>
+  <section id="contact">
+      <div class="wrapper">
+        <h2>Iniciar Sesión</h2>
+        <form id="loginForm" class="login-form" method="post" action="${pageContext.request.contextPath}/LoginServlet">
+              <div class="input-box">
                   <input type="text" id="username" name="username" placeholder="Ingresa tu usuario" required>
               </div>
-              <div class="input-group">
-                  <label for="password">Contraseña</label>
+              <div class="input-box">
                   <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
               </div>
               <button type="submit" class="btn">Iniciar Sesión</button>
           </form>
-
-          <div id="spinner-animation">
-            <!-- div class="spinner"></!-->
-            <c:if test="${param.error == '1'}">
-               <p style="color:red;">Usuario o contraseña incorrectos</p>
-            </c:if>
-          </div>
-        </div>
-        
-    </div>
-  </div>
-
+          <c:if test="${param.error == '1'}">
+               <p style="color:white;">Usuario o contraseña incorrectos</p>
+          </c:if>
+      </div>
+    </section>
 </body>
 </html>
+
+

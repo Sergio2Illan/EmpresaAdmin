@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class FiltroSesion implements Filter {
-    private static final Logger logger = LogManager.getLogger(Conexion.class);
+    private static final Logger logger = LogManager.getLogger(FiltroSesion.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

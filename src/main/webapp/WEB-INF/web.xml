@@ -29,6 +29,24 @@
     <url-pattern>/LoginServlet</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>com.empresa.controller.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>EmpleadoServlet</servlet-name>
+    <servlet-class>com.empresa.controller.EmpleadoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmpleadoServlet</servlet-name>
+    <url-pattern>/EmpleadoServlet</url-pattern>
+  </servlet-mapping>
+
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
